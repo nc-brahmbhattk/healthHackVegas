@@ -1,0 +1,33 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body>
+    <nav>
+      <ul>
+        {% if user.is_authenticated %}
+        <li>
+          <form class="logout-link" action={% url 'accounts:logout' %} method="post">
+            {% csrf_token %}
+            <button type="submit">LOGOUT</button>
+          </form>
+        </li>
+        <li> <a href={% url 'accounts:create_drink' %}>CREATE DRINK</a> </li>
+        {% else %}
+        <li> <a href={% url 'accounts:login' %}>LOG IN</a> </li>
+
+        <li> <a href={% url 'accounts:signup' %}>SIGN UP</a> </li>
+        {% endif %}
+      </ul>
+    </nav>
+    <div class="wrapper">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
